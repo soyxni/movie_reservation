@@ -1,8 +1,10 @@
-from rest_framework import generics  # generics를 올바르게 임포트
-from rest_framework.permissions import AllowAny
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import User
 from .serializers import UserSerializer
 
@@ -11,7 +13,7 @@ from .serializers import UserSerializer
 class UserRegisterView(generics.CreateAPIView):  # generics.CreateAPIView 사용
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]  # 누구나 접근 가능
+    permission_classes = [permissions.AllowAny]  # 누구나 접근 가능
 
 
 # 로그인 View (JWT 토큰 발급)
@@ -28,8 +30,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         except User.DoesNotExist:
             raise AuthenticationFailed('Invalid email or password')
 
-        # 비밀번호 비교
-        if user.password != password:  # 평문 비밀번호 비교
+        # 비밀번호 비교 (평문 비교)
+        if user.password != password:
             raise AuthenticationFailed('Invalid email or password')
 
         # 인증 성공 시 토큰 반환
@@ -48,3 +50,15 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class UserLoginView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+
+# 사용자 정보 조회 View
+class UserDetailView(APIView):
+    authentication_classes = [JWTAuthentication]  # JWT 인증 사용
+    permission_classes = [permissions.IsAuthenticated]  # 로그인된 사용자만 접근 가능
+
+    def get(self, request):
+        # 현재 로그인된 사용자 정보 반환
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)

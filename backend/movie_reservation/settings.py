@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # Django REST Framework
     'users',           # users 앱 등록
+    'movies',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    #'DEFAULT_AUTHENTICATION_CLASSES': (
+    #    'rest_framework_simplejwt.authentication.JWTAuthentication',
+    #),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # Access Token 유효기간
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),    # Refresh Token 유효기간
+    'ROTATE_REFRESH_TOKENS': True,                 # Refresh Token 재발급 활성화
+    'BLACKLIST_AFTER_ROTATION': True,              # 이전 Refresh Token 무효화
+}
+
