@@ -71,6 +71,17 @@ const ReservationPage = () => {
       .catch((error) => console.error("Error during reservation:", error));
   };
 
+  const handleSeatClick = (seat) => {
+    if (seat.is_reserved) {
+      return; // 예약된 좌석은 선택 불가
+    }
+    if (selectedSeat && selectedSeat.seat_number === seat.seat_number) {
+      setSelectedSeat(null); // 이미 선택된 좌석을 클릭하면 선택 취소
+    } else {
+      setSelectedSeat(seat); // 새로운 좌석 선택
+    }
+  };
+
   const renderSeats = () => {
     const rows = {};
     seats.forEach((seat) => {
@@ -94,11 +105,7 @@ const ReservationPage = () => {
                 ? "selected"
                 : "available"
             }`}
-            onClick={() => {
-              if (!seat.is_reserved) {
-                setSelectedSeat(seat);
-              }
-            }}
+            onClick={() => handleSeatClick(seat)}
           >
             {seat.seat_number.slice(1)} {/* 번호만 표시 */}
           </div>

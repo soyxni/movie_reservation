@@ -42,24 +42,36 @@ class SeatReservationView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         user_id = request.data.get('user')
-        seat_number = request.data.get('seat_number')
+        seat_number = request.data.get('seat_number')  # 좌석 번호를 직접 전달
         showtime_id = request.data.get('showtime')
 
-        # Showtime 및 좌석 검증
+        if not all([user_id, seat_number, showtime_id]):
+            return Response({'error': 'User, seat_number, and showtime are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             showtime = Showtime.objects.get(id=showtime_id)
-            seat = Seat.objects.get_or_create(showtime=showtime, seat_number=seat_number)[0]
         except Showtime.DoesNotExist:
-            return Response({'error': 'Invalid Showtime ID'}, status=400)
+            return Response({'error': 'Showtime not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # 좌석 동적 생성
+        seat, created = Seat.objects.get_or_create(
+            showtime=showtime,
+            seat_number=seat_number
+        )
 
         # 좌석 중복 예약 확인
         if Reservation.objects.filter(seat=seat, showtime=showtime).exists():
-            return Response({'error': 'This seat is already reserved.'}, status=400)
+            return Response({'error': 'This seat is already reserved.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # 예약 생성
-        reservation = Reservation.objects.create(user_id=user_id, showtime=showtime, seat=seat)
+        reservation = Reservation.objects.create(
+            user_id=user_id,
+            showtime=showtime,
+            seat=seat,
+        )
         serializer = self.get_serializer(reservation)
-        return Response(serializer.data, status=201)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 # 예약 확인 API
 class ReservationListView(generics.ListAPIView):

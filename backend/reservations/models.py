@@ -1,13 +1,17 @@
 from django.db import models
 
 class Seat(models.Model):
-    showtime = models.ForeignKey("Showtime", models.DO_NOTHING)  # Showtime과 연결
-    seat_number = models.CharField(max_length=10, unique=True)
+    showtime = models.ForeignKey(
+        "Showtime",
+        models.DO_NOTHING,
+        db_column="showtime_id"  # MySQL에서 정확한 컬럼 명시
+    )
+    seat_number = models.CharField(max_length=10)
 
     class Meta:
-        managed = False
+        managed = True  # Django에서 관리
         db_table = 'seat'
-        unique_together = (('showtime', 'seat_number'),)
+        unique_together = (('showtime', 'seat_number'),)  # showtime별 seat_number 유일성 보장
 
 
 class Showtime(models.Model):
@@ -17,7 +21,7 @@ class Showtime(models.Model):
     end_time = models.DateTimeField()
 
     class Meta:
-        managed = False
+        managed = False  # 외부에서 테이블 관리
         db_table = 'showtime'
 
 
