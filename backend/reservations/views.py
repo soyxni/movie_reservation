@@ -4,33 +4,33 @@ from rest_framework.response import Response
 from .models import Reservation, Seat, Showtime
 from .serializers import ReservationSerializer
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Seat, Showtime, Reservation
+
+
 class ShowtimeSeatsView(APIView):
     """
     특정 상영시간의 좌석 상태를 반환
     """
     def get(self, request, pk, *args, **kwargs):
         try:
-            # 상영시간 가져오기
             showtime = Showtime.objects.get(id=pk)
             seats = Seat.objects.filter(screen=showtime.screen)
 
-            # 해당 상영시간의 예약된 좌석 가져오기
+            # 해당 상영시간의 예약된 좌석 확인
             reserved_seats = Reservation.objects.filter(showtime=showtime).values_list('seat_id', flat=True)
 
-            # 좌석 상태 데이터 생성
-            seat_data = []
-            for seat in seats:
-                row = seat.seat_number[0]  # 첫 글자(A~L)
-                column = seat.seat_number[1:]  # 나머지 숫자(1~20)
-                seat_data.append({
+            seat_data = [
+                {
                     "id": seat.id,
                     "seat_number": seat.seat_number,
-                    "row": row,
-                    "column": int(column),
                     "is_reserved": seat.id in reserved_seats,
-                })
+                }
+                for seat in seats
+            ]
 
-            # 응답 데이터 반환
             return Response({
                 "showtime_id": showtime.id,
                 "screen_name": showtime.screen.name,
@@ -39,6 +39,7 @@ class ShowtimeSeatsView(APIView):
 
         except Showtime.DoesNotExist:
             return Response({"error": "Showtime not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 # 좌석 예약 API
 class SeatReservationView(generics.CreateAPIView):
