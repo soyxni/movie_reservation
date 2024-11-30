@@ -7,8 +7,9 @@
 
 /* 상단 바 스타일 */
 .header {
+  position: relative; /* 제목을 absolute로 가운데 정렬할 수 있도록 부모를 relative로 설정 */
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* 왼쪽 버튼을 기본 위치로 */
   align-items: center;
   background-color: #333;
   color: white;
@@ -22,10 +23,14 @@
 }
 
 .title {
+  position: absolute; /* 상단바 가운데로 배치 */
+  left: 50%; /* 왼쪽 기준으로 50% */
+  transform: translateX(-50%); /* 가운데 정렬 */
   text-align: center;
   margin: 0;
   font-size: 18px;
 }
+
 
 /* 영화 목록 스타일 */
 .movie-list {
