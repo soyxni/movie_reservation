@@ -1,0 +1,87 @@
+/* 전체 페이지 스타일 */
+.movie-page {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 상단 바 스타일 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+}
+
+.back-button {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+}
+
+/* 영화 목록 스타일 */
+.movie-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 영화 블록(Card) 스타일 */
+.movie-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 블록 제목 */
+.movie-title {
+  margin-bottom: 10px;
+}
+
+.movie-title h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.movie-title p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* 상영 시간 영역 */
+.showtimes {
+  display: flex;
+  flex-wrap: nowrap; /* 줄 바꿈 없이 가로로 나열 */
+  overflow-x: auto; /* 가로 스크롤 가능 */
+  gap: 10px; /* 아이템 간격 */
+  padding: 5px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  white-space: nowrap; /* 시간 텍스트를 한 줄로 유지 */
+  scrollbar-width: thin; /* 스크롤바를 얇게 설정 (파이어폭스) */
+}
+
+/* 상영 시간 하나의 블록 */
+.showtime {
+  background-color: #ddd;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-align: center;
+  flex-shrink: 0; /* 시간 블록 크기를 유지 */
+  white-space: nowrap; /* 시간 텍스트가 줄 바뀌지 않도록 설정 */
+}
+
