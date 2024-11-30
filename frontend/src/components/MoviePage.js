@@ -43,15 +43,24 @@ const MoviePage = () => {
               {movie.showtimes
                 .filter((showtime) => new Date(showtime.start_time) > currentTime) // 현재 시간 이후 상영 시간만
                 .sort((a, b) => new Date(a.start_time) - new Date(b.start_time)) // 시간순 정렬
-                // .slice(0, 4) // 최대 4개만 표시 -> 왜? 다 가져올거야
                 .map((showtime, index) => {
                   const utcDate = new Date(showtime.start_time);
+                  const month = String(utcDate.getUTCMonth() + 1).padStart(2, "0"); // 월
+                  const date = String(utcDate.getUTCDate()).padStart(2, "0"); // 일
                   const hours = String(utcDate.getUTCHours()).padStart(2, "0"); // UTC 기준 시간
                   const minutes = String(utcDate.getUTCMinutes()).padStart(2, "0"); // UTC 기준 분
                   const period = hours >= 12 ? "오후" : "오전"; // 오전/오후 결정
                   const hours12 = hours % 12 || 12; // 12시간 형식으로 변환 (0은 12로 표시)
-                  const formattedTime = `${period} ${String(hours12).padStart(2, "0")}:${minutes}`; // 오전/오후 HH:mm 형식으로 출력
-                  return <div key={index} className="showtime">{formattedTime}</div>;
+                  const formattedDate = `${month}/${date}`; // MM/DD 형식
+                  const formattedTime = `${period} ${String(hours12).padStart(2, "0")}:${minutes}`; // 오전/오후 HH:mm 형식
+
+                  return (
+                    <div key={index} className="showtime">
+                      {formattedDate}
+                      <br /> {/* 날짜와 시간 사이에 줄바꿈 추가 */}
+                      {formattedTime}
+                    </div>
+                  );
                 })}
             </div>
           </div>
