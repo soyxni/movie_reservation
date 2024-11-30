@@ -10,15 +10,15 @@ class SeatReservationView(generics.CreateAPIView):
     serializer_class = ReservationSerializer
 
     def create(self, request, *args, **kwargs):
-        user_id = request.data.get('user')  # 요청에서 사용자 ID 받기
+        user_id = request.data.get('user')
         seat_id = request.data.get('seat')
         showtime_id = request.data.get('showtime')
 
         # 입력값 검증
-        if not user_id or not seat_id or not showtime_id:
+        if not all([user_id, seat_id, showtime_id]):
             return Response({'error': 'User, seat, and showtime are required.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # 해당 좌석이 이미 예약되었는지 확인
+        # 좌석 중복 예약 확인
         if Reservation.objects.filter(seat_id=seat_id, showtime_id=showtime_id).exists():
             return Response({'error': 'This seat is already reserved.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -38,10 +38,10 @@ class ReservationListView(generics.ListAPIView):
     serializer_class = ReservationSerializer
 
     def get_queryset(self):
-        user_id = self.request.query_params.get('user')  # 사용자 ID를 쿼리 파라미터로 받음
+        user_id = self.request.query_params.get('user')
         if user_id:
-            return self.queryset.filter(user_id=user_id)  # 해당 사용자 예약만 반환
-        return self.queryset.none()  # 사용자 ID가 없으면 빈 결과 반환
+            return self.queryset.filter(user_id=user_id)
+        return self.queryset.none()
 
 
 # 예약 취소 API
@@ -51,9 +51,9 @@ class ReservationCancelView(generics.DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         reservation_id = kwargs.get('pk')
-        user_id = request.data.get('user')  # 요청에서 사용자 ID 받기
+        user_id = request.data.get('user')
 
-        # 예약 확인
+        # 예약 확인 및 취소
         try:
             reservation = self.queryset.get(id=reservation_id, user_id=user_id)
             reservation.delete()
