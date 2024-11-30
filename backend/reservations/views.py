@@ -1,9 +1,5 @@
 from rest_framework import generics, status
-from rest_framework.views import APIView  # 수정된 부분
-from rest_framework.response import Response
-from .models import Reservation, Seat, Showtime
 from .serializers import ReservationSerializer
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,35 +7,33 @@ from .models import Seat, Showtime, Reservation
 
 
 class ShowtimeSeatsView(APIView):
-    """
-    특정 상영시간의 좌석 상태를 반환
-    """
     def get(self, request, pk, *args, **kwargs):
         try:
+            # Showtime 가져오기
             showtime = Showtime.objects.get(id=pk)
-            seats = Seat.objects.filter(screen=showtime.screen)
+            rows = "ABCDEFGHIJKL"  # A~L (12행)
+            columns = 20  # 1~20 (20열)
 
-            # 해당 상영시간의 예약된 좌석 확인
-            reserved_seats = Reservation.objects.filter(showtime=showtime).values_list('seat_id', flat=True)
+            # 예약된 좌석 조회
+            reserved_seats = Reservation.objects.filter(showtime=showtime).values_list('seat__seat_number', flat=True)
 
-            seat_data = [
-                {
-                    "id": seat.id,
-                    "seat_number": seat.seat_number,
-                    "is_reserved": seat.id in reserved_seats,
-                }
-                for seat in seats
-            ]
+            # 동적으로 좌석 생성
+            seats = []
+            for row in rows:
+                for column in range(1, columns + 1):
+                    seat_number = f"{row}{column}"
+                    seats.append({
+                        "seat_number": seat_number,
+                        "is_reserved": seat_number in reserved_seats,
+                    })
 
             return Response({
                 "showtime_id": showtime.id,
                 "screen_name": showtime.screen.name,
-                "seats": seat_data,
-            }, status=status.HTTP_200_OK)
-
+                "seats": seats,
+            }, status=200)
         except Showtime.DoesNotExist:
-            return Response({"error": "Showtime not found"}, status=status.HTTP_404_NOT_FOUND)
-
+            return Response({"error": "Showtime not found"}, status=404)
 
 # 좌석 예약 API
 class SeatReservationView(generics.CreateAPIView):

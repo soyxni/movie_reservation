@@ -1,13 +1,13 @@
 from django.db import models
 
 class Seat(models.Model):
-    screen = models.ForeignKey("movies.Screen", models.DO_NOTHING)
-    seat_number = models.CharField(max_length=10)
+    showtime = models.ForeignKey("Showtime", models.DO_NOTHING)  # Showtime과 연결
+    seat_number = models.CharField(max_length=10, unique=True)
 
     class Meta:
         managed = False
         db_table = 'seat'
-        unique_together = (('screen', 'seat_number'),)
+        unique_together = (('showtime', 'seat_number'),)
 
 
 class Showtime(models.Model):
