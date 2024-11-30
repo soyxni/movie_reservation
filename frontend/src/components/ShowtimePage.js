@@ -36,7 +36,7 @@ const ShowtimePage = () => {
             <div className="movie-title">
               <h2>{movie.title}</h2>
               <p>관람가: {movie.age_limit}세 이상</p>
-              <p>Running Time: {movie.duration}분</p>
+              <p>러닝타임: {movie.duration}분</p>
             </div>
 
             <div className="showtimes">
