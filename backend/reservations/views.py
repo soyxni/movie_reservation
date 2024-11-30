@@ -1,8 +1,44 @@
 from rest_framework import generics, status
+from rest_framework.views import APIView  # 수정된 부분
 from rest_framework.response import Response
 from .models import Reservation, Seat, Showtime
 from .serializers import ReservationSerializer
 
+class ShowtimeSeatsView(APIView):
+    """
+    특정 상영시간의 좌석 상태를 반환
+    """
+    def get(self, request, pk, *args, **kwargs):
+        try:
+            # 상영시간 가져오기
+            showtime = Showtime.objects.get(id=pk)
+            seats = Seat.objects.filter(screen=showtime.screen)
+
+            # 해당 상영시간의 예약된 좌석 가져오기
+            reserved_seats = Reservation.objects.filter(showtime=showtime).values_list('seat_id', flat=True)
+
+            # 좌석 상태 데이터 생성
+            seat_data = []
+            for seat in seats:
+                row = seat.seat_number[0]  # 첫 글자(A~L)
+                column = seat.seat_number[1:]  # 나머지 숫자(1~20)
+                seat_data.append({
+                    "id": seat.id,
+                    "seat_number": seat.seat_number,
+                    "row": row,
+                    "column": int(column),
+                    "is_reserved": seat.id in reserved_seats,
+                })
+
+            # 응답 데이터 반환
+            return Response({
+                "showtime_id": showtime.id,
+                "screen_name": showtime.screen.name,
+                "seats": seat_data,
+            }, status=status.HTTP_200_OK)
+
+        except Showtime.DoesNotExist:
+            return Response({"error": "Showtime not found"}, status=status.HTTP_404_NOT_FOUND)
 
 # 좌석 예약 API
 class SeatReservationView(generics.CreateAPIView):
@@ -31,7 +67,6 @@ class SeatReservationView(generics.CreateAPIView):
         serializer = self.get_serializer(reservation)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
 # 예약 확인 API
 class ReservationListView(generics.ListAPIView):
     queryset = Reservation.objects.all()
@@ -42,7 +77,6 @@ class ReservationListView(generics.ListAPIView):
         if user_id:
             return self.queryset.filter(user_id=user_id)
         return self.queryset.none()
-
 
 # 예약 취소 API
 class ReservationCancelView(generics.DestroyAPIView):
