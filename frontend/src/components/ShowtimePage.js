@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./MoviePage.css";
+import "./ShowtimePage.css";
 
-const MoviePage = () => {
+const ShowtimePage = () => {
   const [movies, setMovies] = useState([]);
   const currentTime = new Date();
 
@@ -25,7 +25,7 @@ const MoviePage = () => {
       {/* 상단 바 */}
       <header className="header">
         <Link to="/" className="back-button">← 뒤로가기</Link>
-        <h1 className="title">영화 조회하기</h1>
+        <h1 className="title">상영 시간 조회하기</h1>
       </header>
 
       {/* 영화 목록 */}
@@ -70,4 +70,4 @@ const MoviePage = () => {
   );
 };
 
-export default MoviePage;
+export default ShowtimePage;
