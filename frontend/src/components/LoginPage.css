@@ -1,26 +1,68 @@
+/* 상단바 스타일 (변경 없음) */
+.header {
+  margin: 0;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 50px;
+}
+
+.back-button {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+  line-height: 50px;
+}
+
+/* 로그인 페이지 스타일 */
 .login-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
   font-family: Arial, sans-serif;
 }
 
-h1 {
-  margin-bottom: 20px;
+/* 로그인 폼 스타일 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 30px; /* 상단바와 이메일 입력칸 사이 간격 */
 }
 
 .input-field {
-  margin: 10px 0;
   padding: 10px;
   width: 300px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
+/* 이메일 칸과 비밀번호 칸 간격 줄이기 */
+.input-field:not(:first-child) {
+  margin-top: 5px; /* 이메일 칸과 비밀번호 칸 사이 간격 */
+}
+
 .login-button {
   padding: 10px 20px;
-  margin-top: 10px;
+  margin-top: 15px; /* 비밀번호 칸과 로그인 버튼 간격 */
   background-color: #333;
   color: white;
   border: none;
