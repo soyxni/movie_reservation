@@ -1,15 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./MainPage.css";
 
-const MainPage = () => {
+const MainPage = ({ isAuthenticated, setIsAuthenticated }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    alert("로그아웃되었습니다.");
+    navigate("/login");
+  };
+
   return (
     <div className="main-container">
-      {/* 로그인 버튼 */}
+      {/* 로그인/로그아웃 링크 */}
       <div className="login-link">
-        <Link to="/login" className="link-text">
-          로그인
-        </Link>
+        {isAuthenticated ? (
+          <span onClick={handleLogout} className="link-text">
+            로그아웃
+          </span>
+        ) : (
+          <Link to="/login" className="link-text">
+            로그인
+          </Link>
+        )}
       </div>
 
       {/* 메인 버튼 영역 */}
