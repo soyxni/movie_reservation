@@ -7,6 +7,7 @@ class Reservation(models.Model):
     reservation_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
+        managed = False
         db_table = 'reservation'
 
 
@@ -15,6 +16,7 @@ class Seat(models.Model):
     seat_number = models.CharField(max_length=10)
 
     class Meta:
+        managed = False
         db_table = 'seat'
         unique_together = (('screen', 'seat_number'),)
 
@@ -26,4 +28,5 @@ class Showtime(models.Model):
     end_time = models.DateTimeField()
 
     class Meta:
+        managed = False
         db_table = 'showtime'

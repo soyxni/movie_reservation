@@ -8,6 +8,7 @@ class Movie(models.Model):
     age_limit = models.IntegerField()
 
     class Meta:
+        managed = False
         db_table = 'movie'
 
     def __str__(self):
@@ -29,6 +30,7 @@ class Screen(models.Model):
     )  # 상영관 유형
 
     class Meta:
+        managed = False
         db_table = 'screen'  # MySQL 테이블 이름
 
     def __str__(self):

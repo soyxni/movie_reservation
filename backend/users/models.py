@@ -21,5 +21,6 @@ class User(models.Model):
     staff_role = models.CharField(max_length=7, choices=STAFF_ROLE_CHOICES, blank=True, null=True)  # 직책 선택
 
     class Meta:
+        managed = False
         db_table = 'user'
 
