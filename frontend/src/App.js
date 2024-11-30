@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./components/MainPage";
 import ShowtimePage from "./components/ShowtimePage";
 import MoviePage from "./components/MoviePage";
+import LoginPage from "./components/LoginPage";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<div>로그인 페이지</div>} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/movies" element={<MoviePage />} />
         <Route path="/showtimes" element={<ShowtimePage />} />
         <Route path="/reservations" element={<div>예매 내역 확인 페이지</div>} />
