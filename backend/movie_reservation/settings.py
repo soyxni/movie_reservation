@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework
     'users',           # users 앱 등록
     'movies',
+    'reservations'
 ]
 
 MIDDLEWARE = [
