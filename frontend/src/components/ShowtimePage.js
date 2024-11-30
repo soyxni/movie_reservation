@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./ShowtimePage.css";
 
 const ShowtimePage = () => {
   const [movies, setMovies] = useState([]);
   const currentTime = new Date();
+  const navigate = useNavigate();
 
   // 영화 데이터 가져오기
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/movies/movies/") // Django API URL
       .then((response) => response.json())
       .then((data) => {
-        // 상영 시작 시간이 현재 시간 이후인 영화만 필터링
         const filteredMovies = data.filter((movie) =>
           movie.showtimes.some((showtime) => new Date(showtime.start_time) > currentTime)
         );
@@ -19,6 +19,17 @@ const ShowtimePage = () => {
       })
       .catch((error) => console.error("Error fetching movies:", error));
   }, []);
+
+  // 로그인 여부 확인
+  const checkLogin = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/login"); // 로그인 페이지로 이동
+      return false;
+    }
+    return true;
+  };
 
   return (
     <div className="movie-page">
@@ -32,7 +43,6 @@ const ShowtimePage = () => {
       <div className="movie-list">
         {movies.map((movie) => (
           <div key={movie.id} className="movie-card">
-            {/* 블록 제목 */}
             <div className="movie-title">
               <h2>{movie.title}</h2>
               <p>관람가: {movie.age_limit}세 이상</p>
@@ -41,23 +51,29 @@ const ShowtimePage = () => {
 
             <div className="showtimes">
               {movie.showtimes
-                .filter((showtime) => new Date(showtime.start_time) > currentTime) // 현재 시간 이후 상영 시간만
-                .sort((a, b) => new Date(a.start_time) - new Date(b.start_time)) // 시간순 정렬
+                .filter((showtime) => new Date(showtime.start_time) > currentTime)
+                .sort((a, b) => new Date(a.start_time) - new Date(b.start_time))
                 .map((showtime, index) => {
                   const utcDate = new Date(showtime.start_time);
-                  const month = String(utcDate.getUTCMonth() + 1).padStart(2, "0"); // 월
-                  const date = String(utcDate.getUTCDate()).padStart(2, "0"); // 일
-                  const hours = String(utcDate.getUTCHours()).padStart(2, "0"); // UTC 기준 시간
-                  const minutes = String(utcDate.getUTCMinutes()).padStart(2, "0"); // UTC 기준 분
-                  const period = hours >= 12 ? "오후" : "오전"; // 오전/오후 결정
-                  const hours12 = hours % 12 || 12; // 12시간 형식으로 변환 (0은 12로 표시)
-                  const formattedDate = `${month}/${date}`; // MM/DD 형식
-                  const formattedTime = `${period} ${String(hours12).padStart(2, "0")}:${minutes}`; // 오전/오후 HH:mm 형식
+                  const formattedDate = `${String(utcDate.getUTCMonth() + 1).padStart(2, "0")}/${String(
+                    utcDate.getUTCDate()
+                  ).padStart(2, "0")}`;
+                  const hours = utcDate.getUTCHours();
+                  const period = hours >= 12 ? "오후" : "오전";
+                  const formattedTime = `${period} ${String(hours % 12 || 12).padStart(2, "0")}:${String(
+                    utcDate.getUTCMinutes()
+                  ).padStart(2, "0")}`;
 
                   return (
-                    <div key={index} className="showtime">
+                    <div
+                      key={index}
+                      className="showtime"
+                      onClick={() => {
+                        if (checkLogin()) navigate(`/reservation/${showtime.id}`); // 예매 페이지로 이동
+                      }}
+                    >
                       {formattedDate}
-                      <br /> {/* 날짜와 시간 사이에 줄바꿈 추가 */}
+                      <br />
                       {formattedTime}
                     </div>
                   );

@@ -7,9 +7,9 @@
 
 /* 상단 바 스타일 */
 .header {
-  position: relative; /* 제목을 absolute로 가운데 정렬할 수 있도록 부모를 relative로 설정 */
+  position: relative;
   display: flex;
-  justify-content: flex-start; /* 왼쪽 버튼을 기본 위치로 */
+  justify-content: flex-start;
   align-items: center;
   background-color: #333;
   color: white;
@@ -23,14 +23,13 @@
 }
 
 .title {
-  position: absolute; /* 상단바 가운데로 배치 */
-  left: 50%; /* 왼쪽 기준으로 50% */
-  transform: translateX(-50%); /* 가운데 정렬 */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
   margin: 0;
   font-size: 18px;
 }
-
 
 /* 영화 목록 스타일 */
 .movie-list {
@@ -68,15 +67,15 @@
 /* 상영 시간 영역 */
 .showtimes {
   display: flex;
-  flex-wrap: nowrap; /* 줄 바꿈 없이 가로로 나열 */
-  overflow-x: auto; /* 가로 스크롤 가능 */
-  gap: 10px; /* 아이템 간격 */
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
   padding: 5px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
-  white-space: nowrap; /* 시간 텍스트를 한 줄로 유지 */
-  scrollbar-width: thin; /* 스크롤바를 얇게 설정 (파이어폭스) */
+  white-space: nowrap;
+  scrollbar-width: thin;
 }
 
 /* 상영 시간 하나의 블록 */
@@ -86,7 +85,12 @@
   border-radius: 3px;
   font-size: 14px;
   text-align: center;
-  flex-shrink: 0; /* 시간 블록 크기를 유지 */
-  white-space: nowrap; /* 시간 텍스트가 줄 바뀌지 않도록 설정 */
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: pointer; /* 클릭 가능한 커서 표시 */
+  transition: background-color 0.3s ease;
 }
 
+.showtime:hover {
+  background-color: #ccc; /* 호버 시 색상 변경 */
+}
