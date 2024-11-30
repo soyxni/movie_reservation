@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework
     'users',           # users 앱 등록
     'movies',
-    'reservations'
+    'reservations',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'movie_reservation.urls'
@@ -146,3 +148,4 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,              # 이전 Refresh Token 무효화
 }
 
+CORS_ALLOW_ALL_ORIGINS = True  # 모든 도메인 허용 (개발 환경에서만 권장)
