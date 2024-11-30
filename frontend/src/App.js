@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./components/MainPage";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<div>로그인 페이지</div>} />
+        <Route path="/movies" element={<div>영화 조회 페이지</div>} />
+        <Route path="/showtimes" element={<div>상영 시간 조회 페이지</div>} />
+        <Route path="/reservations" element={<div>예매 내역 확인 페이지</div>} />
+        <Route path="/admin" element={<div>관리자 모드 페이지</div>} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
