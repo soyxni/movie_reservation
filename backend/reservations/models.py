@@ -1,18 +1,14 @@
 from django.db import models
 
 class Seat(models.Model):
-    showtime = models.ForeignKey(
-        "Showtime",
-        models.DO_NOTHING,
-        db_column="showtime_id"  # MySQL에서 정확한 컬럼 명시
-    )
-    seat_number = models.CharField(max_length=10)
+    showtime = models.ForeignKey("Showtime", models.DO_NOTHING)
+    seat_number = models.CharField(max_length=10, unique=True)
+    screen = models.ForeignKey("movies.Screen", models.DO_NOTHING)  # Screen 필드 추가
 
     class Meta:
-        managed = True  # Django에서 관리
+        managed = True
         db_table = 'seat'
-        unique_together = (('showtime', 'seat_number'),)  # showtime별 seat_number 유일성 보장
-
+        unique_together = (('showtime', 'seat_number'),)
 
 class Showtime(models.Model):
     movie = models.ForeignKey("movies.Movie", models.DO_NOTHING)
