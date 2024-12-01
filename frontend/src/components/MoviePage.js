@@ -35,7 +35,7 @@ const MoviePage = () => {
               <p>설명: {movie.description}</p>
               <p>관람가: {movie.age_limit}세 이상</p>
             </div>
-            <button className="reserve-button">예매하러 가기</button>
+            {/* <button className="reserve-button">예매하러 가기</button> */}
           </div>
         ))}
       </div>

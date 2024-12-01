@@ -3,9 +3,11 @@ from .models import Reservation
 from movies.serializers import MovieSerializer, ScreenSerializer
 
 class ReservationSerializer(serializers.ModelSerializer):
+    seat_number = serializers.CharField(source='seat.seat_number', read_only=True)
+
     class Meta:
         model = Reservation
-        fields = ['id', 'user', 'showtime', 'seat']
+        fields = ['id', 'user', 'showtime', 'seat_number', 'reservation_time']
 
 class ReservationDetailSerializer(serializers.ModelSerializer):
     movie_title = serializers.CharField(source='showtime.movie.title', read_only=True)

@@ -3,23 +3,30 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./ResDetailsPage.css";
 
 const ResDetailsPage = () => {
-  const { id } = useParams(); // 예매 ID
-  const [ticketDetails, setTicketDetails] = useState(null); // 예매 정보
+  const { id } = useParams(); // 예약 ID
+  const [ticketDetails, setTicketDetails] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 예매 정보 가져오기
+    console.log("Reservation ID:", id);
     fetch(`http://127.0.0.1:8000/api/reservations/${id}/`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ticket details. Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
+        console.log("Ticket details:", data);
         setTicketDetails(data);
       })
       .catch((error) => console.error("Error fetching ticket details:", error));
   }, [id]);
+  
 
   if (!ticketDetails) {
     return <p>Loading ticket details...</p>;
@@ -35,7 +42,6 @@ const ResDetailsPage = () => {
     genre,
   } = ticketDetails;
 
-  // 날짜 및 시간 포맷팅
   const formatDateTime = (dateTimeString) => {
     const options = {
       year: "numeric",
@@ -54,22 +60,13 @@ const ResDetailsPage = () => {
         <h1 className="title">Ticket</h1>
       </header>
       <div className="ticket-details">
-        <p><strong>🎬 영화 제목:</strong> {movie_title}</p>
-        <p>
-          <strong>⏰ 상영 시작 시간:</strong> {formatDateTime(start_time)}
-        </p>
-        <p>
-          <strong>🏢 상영관:</strong> {screen_name} ({screen_type})
-        </p>
-        <p><strong>🕒 러닝타임:</strong> {duration}분</p>
-        <p>
-          <strong>🔞 관람가 | 🎭 장르:</strong> {age_limit} | {genre}
-        </p>
+        <p><strong>🎬 영화 제목 :</strong> {movie_title}</p>
+        <p><strong>⏰ 상영 시간 :</strong> {formatDateTime(start_time)}</p>
+        <p><strong>🏢 상영관 :</strong> {screen_name} ({screen_type})</p>
+        <p><strong>🕒 러닝타임 :</strong> {duration}분</p>
+        <p><strong>🔞 관람가 :</strong> {age_limit} | <strong> 🎭 장르:</strong> {genre}</p>
       </div>
-      <button
-        className="home-button"
-        onClick={() => navigate("/")}
-      >
+      <button className="home-button" onClick={() => navigate("/")}>
         Home
       </button>
     </div>

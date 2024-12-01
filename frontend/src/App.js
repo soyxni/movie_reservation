@@ -48,7 +48,7 @@ const App = () => {
         />
         <Route path="/movies" element={<MoviePage />} />
         <Route path="/showtimes" element={<ShowtimePage />} />
-        <Route path="/reservations" element={<ResDetailsPage />} />
+        <Route path="/reservations/:id" element={<ResDetailsPage />} />
         <Route path="/admin" element={<div>관리자 모드 페이지</div>} />
         <Route path="/reservation/:id" element={<ReservationPage />} />
       </Routes>

@@ -46,14 +46,20 @@ const ReservationPage = () => {
       }),
     })
       .then((response) => {
-        if (response.ok) {
-          alert("예매가 완료되었습니다.");
-          navigate("/reservations"); // 예매 내역 페이지로 이동
-        } else {
-          alert("예매에 실패했습니다. 좌석 중복 여부를 확인하세요.");
+        if (!response.ok) {
+          throw new Error("Failed to reserve seat.");
         }
+        return response.json();
       })
-      .catch((error) => console.error("Error during reservation:", error));
+      .then((data) => {
+        console.log("Reservation successful:", data);
+        alert("예매가 완료되었습니다.");
+        navigate(`/reservations/${data.id}`); // 예약 ID를 사용해 이동
+      })
+      .catch((error) => {
+        console.error("Error during reservation:", error);
+        alert("예매에 실패했습니다. 좌석 중복 여부를 확인하세요.");
+      });
   };
 
   // 좌석 렌더링 함수
