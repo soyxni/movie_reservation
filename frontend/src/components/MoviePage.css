@@ -1,0 +1,82 @@
+/* 전체 페이지 스타일 */
+.movie-page {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 상단 바 스타일 */
+.header {
+  position: relative; /* 제목을 가운데 정렬할 수 있도록 부모를 relative로 설정 */
+  display: flex;
+  justify-content: flex-start; /* 왼쪽 버튼을 기본 위치로 */
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+}
+
+.back-button {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.title {
+  position: absolute; /* 상단바 가운데로 배치 */
+  left: 50%; /* 왼쪽 기준으로 50% */
+  transform: translateX(-50%); /* 가운데 정렬 */
+  text-align: center;
+  margin: 0;
+  font-size: 18px;
+}
+
+/* 영화 목록 스타일 */
+.movie-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 영화 블록(Card) 스타일 */
+.movie-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 영화 정보 */
+.movie-info h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.movie-info p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* 예매 버튼 */
+.reservation-button {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.reserve-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reserve-button:hover {
+  background-color: #0056b3;
+}

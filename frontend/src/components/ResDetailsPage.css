@@ -1,0 +1,45 @@
+/* 상단바 스타일 */
+.header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* 예매 정보 스타일 */
+.ticket-details {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  line-height: 1.8;
+}
+
+.ticket-details p {
+  margin: 5px 0;
+}
+
+/* 버튼 스타일 */
+.home-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.home-button:hover {
+  background-color: #0056b3;
+}
