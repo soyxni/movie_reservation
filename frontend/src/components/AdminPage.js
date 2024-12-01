@@ -15,10 +15,10 @@ const AdminPage = () => {
   return (
     <div className="admin-page">
       <header className="header">
-        <button className="back-button" onClick={() => navigate("/")}>
-          ← 뒤로가기
-        </button>
-        <h1>관리자 모드</h1>
+        <span className="back-text" onClick={() => navigate("/")}>
+          ← back
+        </span>
+        <h1 className="title">관리자 모드</h1>
       </header>
       <div className="admin-options">
         <Link to="/admin/movies/register" className="admin-link">

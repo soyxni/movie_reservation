@@ -94,10 +94,10 @@ const MovieRegisterPage = () => {
   return (
     <div className="movie-register-page">
       <header className="header">
-        <button className="back-button" onClick={() => navigate("/admin")}>
-          ← 관리자 모드
-        </button>
-        <h1>영화 등록 및 관리</h1>
+        <span className="back-text" onClick={() => navigate("/admin")}>
+          ← back
+        </span>
+      <h1 className="title">영화 등록 및 관리</h1>
       </header>
       <form className="movie-form" onSubmit={handleSubmit}>
         <input
