@@ -4,11 +4,15 @@ import "./ReservationListPage.css";
 
 const ReservationListPage = () => {
   const [reservations, setReservations] = useState([]); // 예매 내역
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("user_id");
-    if (!userId) {
+
+    if (!token || !userId) {
+      // 인증되지 않은 경우 로그인 페이지로 리다이렉트
       alert("로그인 후 이용해주세요.");
       navigate("/login");
       return;
@@ -17,15 +21,22 @@ const ReservationListPage = () => {
     // 예매 내역 가져오기
     fetch(`http://127.0.0.1:8000/api/reservations/list/?user=${userId}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
         setReservations(data);
       })
-      .catch((error) => console.error("Error fetching reservations:", error));
+      .catch((error) => console.error("Error fetching reservations:", error))
+      .finally(() => {
+        setIsLoading(false); // 로딩 상태 종료
+      });
   }, [navigate]);
+
+  if (isLoading) {
+    return <p className="loading-message">로딩 중...</p>; // 로딩 중 표시
+  }
 
   if (reservations.length === 0) {
     return <p className="no-reservations">예매 내역이 없습니다.</p>;
