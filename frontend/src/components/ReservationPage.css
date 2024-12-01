@@ -53,31 +53,37 @@
   margin-right: 10px;
 }
 
+/* 좌석 스타일 */
 .seat {
   width: 25px;
   height: 25px;
   margin: 2px;
-  background-color: #ddd;
   border: 1px solid #aaa;
   text-align: center;
   line-height: 25px;
   cursor: pointer;
-}
-
-.seat.available:hover {
-  background-color: #f0f0f0;
-}
-
-.seat.selected {
-  background-color: #007bff;
-  color: white;
+  background-color: #ddd; /* 기본 좌석 색상 */
+  transition: background-color 0.2s; /* 애니메이션 추가 */
 }
 
 .seat.reserved {
-  background-color: #555;
+  background-color: #555; /* 예약된 좌석 색상 */
   color: white;
-  cursor: not-allowed;
+  cursor: not-allowed; /* 클릭 비활성화 */
+  pointer-events: none; /* 클릭 동작 비활성화 */
 }
+
+.seat.available:hover {
+  background-color: #f0f0f0; /* 예약 가능 좌석 hover 색상 */
+  cursor: pointer; /* 클릭 가능 */
+}
+
+.seat.selected {
+  background-color: #007bff; /* 선택된 좌석 색상 */
+  color: white;
+}
+
+
 
 .legend {
   display: flex;

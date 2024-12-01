@@ -20,7 +20,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
       if (response.ok) {
         const data = await response.json();
         console.log("JWT Access Token:", data.access);
+        console.log("User ID:", data.user_id);
+        
         localStorage.setItem("token", data.access);
+        localStorage.setItem("user_id", data.user_id);
+
         setIsAuthenticated(true);
         alert("로그인 성공");
         navigate("/");

@@ -13,31 +13,29 @@ class ShowtimeSeatsView(APIView):
         try:
             # 상영시간 가져오기
             showtime = Showtime.objects.get(id=pk)
-            seats = Seat.objects.filter(showtime=showtime)
 
-            # 해당 상영시간의 예약된 좌석 가져오기
-            reserved_seats = Reservation.objects.filter(showtime=showtime).values_list('seat_id', flat=True)
+            # Reservation 테이블에서 해당 상영시간에 예약된 좌석 ID 가져오기
+            reserved_seat_ids = Reservation.objects.filter(showtime=showtime).values_list('seat__id', flat=True)
 
             # 좌석 상태 데이터 생성
             seat_data = []
-            rows = "ABCDEFGHIJKL"
-            columns = 20
+            rows = "ABCDEFGHIJKL"  # A~L 행
+            columns = 20  # 1~20 열
 
             # 모든 좌석 데이터 생성 (동적 생성)
             for row in rows:
                 for column in range(1, columns + 1):
                     seat_number = f"{row}{column}"
-                    seat, created = Seat.objects.get_or_create(
-                        showtime=showtime,
-                        seat_number=seat_number,
-                        defaults={"screen": showtime.screen}
-                    )
+
+                    # 해당 상영시간의 좌석 생성 또는 가져오기
+                    seat, created = Seat.objects.get_or_create(showtime=showtime, seat_number=seat_number)
+
+                    # Reservation 테이블에 존재 여부로 예약 상태 판단
                     seat_data.append({
-                        "id": seat.id,
-                        "seat_number": seat.seat_number,
+                        "seat_number": seat_number,
                         "row": row,
                         "column": column,
-                        "is_reserved": seat.id in reserved_seats,
+                        "is_reserved": seat.id in reserved_seat_ids,
                     })
 
             return Response({
@@ -50,6 +48,7 @@ class ShowtimeSeatsView(APIView):
             return Response({"error": "Showtime not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
+
 # 좌석 예약 API
 class SeatReservationView(generics.CreateAPIView):
     queryset = Reservation.objects.all()
@@ -59,7 +58,8 @@ class SeatReservationView(generics.CreateAPIView):
         user_id = request.data.get('user')
         seat_number = request.data.get('seat_number')
         showtime_id = request.data.get('showtime')
-
+        # 디버깅용 로그
+        print(f"User ID: {user_id}, Seat Number: {seat_number}, Showtime ID: {showtime_id}")
         # 입력값 검증
         if not all([user_id, seat_number, showtime_id]):
             return Response({'error': 'Invalid input data'}, status=status.HTTP_400_BAD_REQUEST)

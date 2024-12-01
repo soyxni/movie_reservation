@@ -8,25 +8,8 @@ const ReservationPage = () => {
   const [selectedSeat, setSelectedSeat] = useState(null); // 선택된 좌석
   const navigate = useNavigate();
 
-  // 초기 좌석 생성 (12행 × 20열)
   useEffect(() => {
-    const initialSeats = [];
-    const rows = "ABCDEFGHIJKL"; // 12행
-    const columns = 20; // 20열
-    rows.split("").forEach((row) => {
-      for (let col = 1; col <= columns; col++) {
-        initialSeats.push({
-          id: `${row}${col}`, // 좌석 번호
-          seat_number: `${row}${col}`,
-          row,
-          column: col,
-          is_reserved: false,
-        });
-      }
-    });
-    setSeats(initialSeats);
-
-    // API 요청으로 예약된 좌석 데이터 가져오기
+    // 예약된 좌석 데이터 가져오기
     fetch(`http://127.0.0.1:8000/api/reservations/showtime/${id}/seats/`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -34,15 +17,11 @@ const ReservationPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const reservedSeats = data.seats || [];
-        // 초기 좌석에 예약 상태 반영
-        const updatedSeats = initialSeats.map((seat) => {
-          const isReserved = reservedSeats.some(
-            (reserved) => reserved.seat_number === seat.seat_number
-          );
-          return { ...seat, is_reserved: isReserved };
-        });
-        setSeats(updatedSeats);
+        const fetchedSeats = data.seats || [];
+        console.log("Fetched seats:", fetchedSeats);
+
+        // fetchedSeats는 이미 is_reserved 값을 포함하므로 바로 사용 가능
+        setSeats(fetchedSeats);
       })
       .catch((error) => console.error("Error fetching seats:", error));
   }, [id]);
@@ -96,23 +75,26 @@ const ReservationPage = () => {
           .sort((a, b) => a.column - b.column)
           .map((seat) => (
             <div
-              key={seat.id}
+              key={seat.seat_number}
               className={`seat ${
                 seat.is_reserved
-                  ? "reserved"
-                  : selectedSeat && selectedSeat.id === seat.id
-                  ? "selected"
-                  : "available"
+                  ? "reserved" // 예약된 좌석
+                  : selectedSeat && selectedSeat.seat_number === seat.seat_number
+                  ? "selected" // 선택된 좌석
+                  : "available" // 예약 가능 좌석
               }`}
               onClick={() => {
                 if (!seat.is_reserved) {
+                  // 예약된 좌석은 클릭 불가
                   setSelectedSeat(
-                    selectedSeat && selectedSeat.id === seat.id ? null : seat
+                    selectedSeat && selectedSeat.seat_number === seat.seat_number
+                      ? null
+                      : seat
                   );
                 }
               }}
             >
-              {seat.column}
+              {seat.column} {/* 좌석 번호 표시 */}
             </div>
           ))}
       </div>

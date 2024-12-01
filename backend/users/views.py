@@ -10,7 +10,7 @@ from .serializers import UserSerializer
 
 
 # 회원가입 View
-class UserRegisterView(generics.CreateAPIView):  # generics.CreateAPIView 사용
+class UserRegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]  # 누구나 접근 가능
@@ -20,8 +20,7 @@ class UserRegisterView(generics.CreateAPIView):  # generics.CreateAPIView 사용
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     username_field = 'email'  # username 대신 email 사용
 
-    @classmethod
-    def validate(cls, attrs):
+    def validate(self, attrs):
         email = attrs.get('email')  # `username` 대신 `email` 사용
         password = attrs.get('password')
 
@@ -35,10 +34,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             raise AuthenticationFailed('Invalid email or password')
 
         # 인증 성공 시 토큰 반환
-        refresh = cls.get_token(user)
-        return {
+        refresh = self.get_token(user)
+        data = {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'user_id': user.id,  # user_id 추가
             'user': {
                 'id': user.id,
                 'email': user.email,
@@ -46,6 +46,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
                 'role': user.role,
             },
         }
+        return data
 
 
 class UserLoginView(TokenObtainPairView):
