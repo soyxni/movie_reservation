@@ -1,34 +1,38 @@
-/* 상단바 스타일 (변경 없음) */
+/* 상단바 스타일 */
 .header {
   margin: 0;
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: #333;
+  background-color: #333; /* 상단바 색상 유지 */
   color: white;
-  padding: 10px 20px;
+  padding: 0 20px;
   width: 100%;
   box-sizing: border-box;
-  height: 50px;
+  height: 80px; /* 상단바 높이 80px */
 }
 
-.back-button {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.back-text {
+  text-decoration: none; /* 밑줄 제거 */
+  color: white; /* 글씨 흰색 */
+  font-size: 17px; /* 크기 조정 */
+  font-weight: bold;
+  cursor: pointer; /* 클릭 가능 */
+  line-height: 80px; /* 상단바 높이에 맞춤 */
+  margin-left: 30px;
 }
-
+  
 .title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   margin: 0;
-  font-size: 18px;
-  line-height: 50px;
+  font-size: 20px; /* 타이틀 크기 조정 */
+  line-height: 80px; /* 상단바 높이에 맞춤 */
 }
+
 
 /* 로그인 페이지 스타일 */
 .login-page {
@@ -45,29 +49,32 @@
   align-items: center;
   width: 100%;
   max-width: 400px;
-  margin-top: 30px; /* 상단바와 이메일 입력칸 사이 간격 */
+  margin-top: 40px; /* 상단바와 이메일 입력칸 사이 간격 */
 }
 
 .input-field {
-  padding: 10px;
-  width: 300px;
+  padding: 15px; /* 입력 필드 크기 키움 */
+  width: 450px; /* 필드 넓이 키움 */
+  height: 40px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 16px; /* 글씨 크기 키움 */
 }
 
-/* 이메일 칸과 비밀번호 칸 간격 줄이기 */
+/* 이메일 칸과 비밀번호 칸 간격 */
 .input-field:not(:first-child) {
-  margin-top: 5px; /* 이메일 칸과 비밀번호 칸 사이 간격 */
+  margin-top: 20px; /* 간격 더 넓힘 */
 }
 
 .login-button {
-  padding: 10px 20px;
-  margin-top: 15px; /* 비밀번호 칸과 로그인 버튼 간격 */
+  padding: 10px 20px; /* 버튼 크기 키움 */
+  margin-top: 30px; /* 비밀번호 칸과 로그인 버튼 간격 더 넓힘 */
   background-color: #333;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .login-button:hover {
@@ -75,8 +82,9 @@
 }
 
 .register-link {
-  color: blue;
+  color: #333; /* 가입 페이지 이동 링크 색상 수정 */
   text-decoration: underline;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 14px;
 }

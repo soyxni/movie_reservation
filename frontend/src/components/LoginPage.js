@@ -21,7 +21,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         const data = await response.json();
         console.log("JWT Access Token:", data.access);
         console.log("User ID:", data.user_id);
-        
+
         localStorage.setItem("token", data.access);
         localStorage.setItem("user_id", data.user_id);
         localStorage.setItem("role", data.role);
@@ -41,10 +41,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
     <div className="login-page">
       {/* 상단바 */}
       <header className="header">
-        <span onClick={() => navigate("/")} className="back-button">
-          ← 뒤로가기
+        <span onClick={() => navigate("/")} className="back-text">
+          ← back
         </span>
-        <h1 className="title">로그인</h1>
+        <h1 className="title">Login</h1>
       </header>
 
       {/* 로그인 폼 */}

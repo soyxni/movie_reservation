@@ -39,11 +39,11 @@ const MainPage = ({ isAuthenticated, setIsAuthenticated }) => {
         <div className="login-link">
           {isAuthenticated ? (
             <span onClick={handleLogout} className="link-text">
-              로그아웃
+              Logout
             </span>
           ) : (
             <Link to="/login" className="link-text">
-              로그인
+              Login
             </Link>
           )}
         </div>
