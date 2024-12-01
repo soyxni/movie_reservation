@@ -49,20 +49,21 @@ const LoginPage = ({ setIsAuthenticated }) => {
 
       {/* 로그인 폼 */}
       <div className="login-form">
-        <input
-          type="email"
-          placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="input-field"
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="input-field"
-        />
+      <input
+        type="email"
+        placeholder="이메일"
+        value={email} // 상태와 연결
+        onChange={(e) => setEmail(e.target.value)} // 상태 업데이트
+        className="input-field"
+      />
+      <input
+        type="password"
+        placeholder="비밀번호"
+        value={password} // 상태와 연결
+        onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
+        className="input-field"
+      />
+
         <button onClick={handleLogin} className="login-button">
           로그인
         </button>

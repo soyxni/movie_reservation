@@ -7,19 +7,27 @@
 
 /* 상단 바 스타일 */
 .header {
+  margin: 0;
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  background-color: #333;
+  background-color: #333; /* 상단바 배경색 */
   color: white;
-  padding: 10px 20px;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 80px; /* 상단바 높이 */
 }
 
-.back-button {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
+.back-text {
+  text-decoration: none; /* 밑줄 제거 */
+  color: white; /* 글씨 흰색 */
+  font-size: 17px; /* 글씨 크기 */
+  font-weight: bold; /* 굵은 글씨 */
+  cursor: pointer; /* 클릭 가능 */
+  line-height: 80px; /* 상단바 높이에 맞춤 */
+  margin-left: 30px; /* 왼쪽 여백 */
 }
 
 .title {
@@ -28,7 +36,8 @@
   transform: translateX(-50%);
   text-align: center;
   margin: 0;
-  font-size: 18px;
+  font-size: 20px; /* 타이틀 크기 */
+  line-height: 80px; /* 상단바 높이에 맞춤 */
 }
 
 /* 영화 목록 스타일 */
@@ -48,9 +57,9 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 블록 제목 */
+/* 영화 블록 제목 */
 .movie-title {
-  margin-bottom: 10px;
+  margin-bottom: 5px; /* 간격을 더 좁게 설정 (기존 10px → 5px) */
 }
 
 .movie-title h2 {
@@ -70,13 +79,15 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 10px;
-  padding: 5px;
+  padding: 10px; /* 내부 패딩을 늘려 높이 증가 */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 3px;
   white-space: nowrap;
   scrollbar-width: thin;
+  height: 60px; /* 높이를 명시적으로 설정 */
 }
+
 
 /* 상영 시간 하나의 블록 */
 .showtime {

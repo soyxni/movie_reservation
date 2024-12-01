@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./ShowtimePage.css";
 
 const ShowtimePage = () => {
@@ -7,7 +7,6 @@ const ShowtimePage = () => {
   const currentTime = new Date();
   const navigate = useNavigate();
 
-  // 영화 데이터 가져오기
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/movies/movies/") // Django API URL
       .then((response) => response.json())
@@ -20,7 +19,6 @@ const ShowtimePage = () => {
       .catch((error) => console.error("Error fetching movies:", error));
   }, []);
 
-  // 로그인 여부 확인
   const checkLogin = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -35,7 +33,9 @@ const ShowtimePage = () => {
     <div className="movie-page">
       {/* 상단 바 */}
       <header className="header">
-        <Link to="/" className="back-button">← 뒤로가기</Link>
+        <span onClick={() => navigate("/")} className="back-text">
+          ← back
+        </span>
         <h1 className="title">상영 시간 조회하기</h1>
       </header>
 
@@ -45,8 +45,12 @@ const ShowtimePage = () => {
           <div key={movie.id} className="movie-card">
             <div className="movie-title">
               <h2>{movie.title}</h2>
-              <p>관람가: {movie.age_limit}세 이상</p>
-              <p>러닝타임: {movie.duration}분</p>
+              <p>
+                <strong>관람가:</strong> {movie.age_limit}세 이상
+              </p>
+              <p>
+                <strong>러닝타임:</strong> {movie.duration}분
+              </p>
             </div>
 
             <div className="showtimes">
