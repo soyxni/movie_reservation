@@ -7,28 +7,37 @@
 
 /* 상단 바 스타일 */
 .header {
-  position: relative; /* 제목을 가운데 정렬할 수 있도록 부모를 relative로 설정 */
+  margin: 0;
+  position: relative;
   display: flex;
-  justify-content: flex-start; /* 왼쪽 버튼을 기본 위치로 */
+  justify-content: flex-start;
   align-items: center;
-  background-color: #333;
+  background-color: #333; /* 상단바 배경색 */
   color: white;
-  padding: 10px 20px;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+  height: 80px; /* 상단바 높이 */
 }
 
-.back-button {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
+.back-text {
+  text-decoration: none; /* 밑줄 제거 */
+  color: white; /* 글씨 흰색 */
+  font-size: 17px; /* 글씨 크기 */
+  font-weight: bold; /* 굵은 글씨 */
+  cursor: pointer; /* 클릭 가능 */
+  line-height: 80px; /* 상단바 높이에 맞춤 */
+  margin-left: 30px; /* 왼쪽 여백 */
 }
 
 .title {
-  position: absolute; /* 상단바 가운데로 배치 */
-  left: 50%; /* 왼쪽 기준으로 50% */
-  transform: translateX(-50%); /* 가운데 정렬 */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
   margin: 0;
-  font-size: 18px;
+  font-size: 20px; /* 타이틀 크기 */
+  line-height: 80px; /* 상단바 높이에 맞춤 */
 }
 
 /* 영화 목록 스타일 */
@@ -39,44 +48,30 @@
   gap: 20px;
 }
 
-/* 영화 블록(Card) 스타일 */
+/* 영화 카드 스타일 */
 .movie-card {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 20px;
   background-color: #f9f9f9;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 영화 정보 */
-.movie-info h2 {
-  margin: 0;
-  font-size: 20px;
+/* 영화 제목 스타일 */
+.movie-title h2 {
+  font-size: 24px; /* 제목 폰트 크기 */
+  margin: 0 0 10px 0; /* 제목 아래 간격 */
+  color: #333; /* 제목 색상 */
 }
 
-.movie-info p {
+/* 장르, 러닝타임, 설명, 관람가 스타일 */
+.movie-title p {
   margin: 5px 0;
   color: #555;
-  font-size: 14px;
+  font-size: 16px; /* 설명 글씨 크기 증가 */
 }
 
-/* 예매 버튼 */
-.reservation-button {
-  margin-top: 10px;
-  text-align: center;
-}
-
-.reserve-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.reserve-button:hover {
-  background-color: #0056b3;
+.movie-title p strong {
+  font-weight: bold; /* 굵은 텍스트 */
+  color: #333; /* 강조 색상 */
 }
