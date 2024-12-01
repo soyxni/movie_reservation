@@ -101,7 +101,7 @@ class SeatReservationView(generics.CreateAPIView):
 # 예약 확인 API
 class ReservationListView(generics.ListAPIView):
     queryset = Reservation.objects.all()
-    serializer_class = ReservationSerializer
+    serializer_class = ReservationDetailSerializer
 
     def get_queryset(self):
         user_id = self.request.query_params.get('user')

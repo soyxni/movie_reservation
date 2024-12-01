@@ -7,6 +7,7 @@ import LoginPage from "./components/LoginPage";
 import fetchWithToken from "./utils/fetchWithToken";
 import ReservationPage from "./components/ReservationPage";
 import ResDetailsPage from "./components/ResDetailsPage";
+import ReservationListPage from "./components/ReservationListPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="/reservations/:id" element={<ResDetailsPage />} />
         <Route path="/admin" element={<div>관리자 모드 페이지</div>} />
         <Route path="/reservation/:id" element={<ReservationPage />} />
+        <Route path="/reservations" element={<ReservationListPage />} />
       </Routes>
     </Router>
   );
