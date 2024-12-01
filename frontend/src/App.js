@@ -6,6 +6,7 @@ import MoviePage from "./components/MoviePage";
 import LoginPage from "./components/LoginPage";
 import fetchWithToken from "./utils/fetchWithToken";
 import ReservationPage from "./components/ReservationPage";
+import ResDetailsPage from "./components/ResDetailsPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -47,7 +48,7 @@ const App = () => {
         />
         <Route path="/movies" element={<MoviePage />} />
         <Route path="/showtimes" element={<ShowtimePage />} />
-        <Route path="/reservations" element={<div>예매 내역 확인 페이지</div>} />
+        <Route path="/reservations" element={<ResDetailsPage />} />
         <Route path="/admin" element={<div>관리자 모드 페이지</div>} />
         <Route path="/reservation/:id" element={<ReservationPage />} />
       </Routes>

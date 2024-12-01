@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Reservation, Seat, Showtime
 from .serializers import ReservationSerializer
+from rest_framework.generics import RetrieveAPIView
 
 
 class ShowtimeSeatsView(APIView):
@@ -121,3 +122,8 @@ class ReservationCancelView(generics.DestroyAPIView):
             return Response({'message': 'Reservation cancelled successfully.'}, status=status.HTTP_200_OK)
         except Reservation.DoesNotExist:
             return Response({'error': 'Reservation not found or unauthorized.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ReservationDetailsView(RetrieveAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
