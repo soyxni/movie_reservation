@@ -1,6 +1,6 @@
 .movie-register-page {
-  font-family: Arial, sans-serif;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .header {
@@ -11,11 +11,21 @@
 }
 
 .back-button {
-  background: none;
+  background-color: #f44336;
+  color: white;
   border: none;
-  color: #007bff;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+}
+
+.back-button:hover {
+  background-color: #d32f2f;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
 }
 
 .movie-form {
@@ -28,23 +38,23 @@
 .movie-form input,
 .movie-form textarea {
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .movie-form button {
-  padding: 10px;
-  background-color: #007bff;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
 }
 
 .movie-form button:hover {
-  background-color: #0056b3;
+  background-color: #388e3c;
 }
 
 .movie-list {
@@ -52,8 +62,18 @@
 }
 
 .movie-item {
-  border: 1px solid #ccc;
-  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
   margin-bottom: 10px;
-  border-radius: 4px;
+  border-radius: 5px;
+}
+
+.movie-item p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.movie-item:nth-child(even) {
+  background-color: #f1f1f1;
 }

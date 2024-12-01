@@ -60,8 +60,7 @@ const App = () => {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/movies/register" element={<MovieRegisterPage />} />
         {/* <Route path="/admin/screens/register" element={<ScreenRegisterPage />} />
-        <Route path="/admin/movies" element={<MoviePage />} />
-        <Route path="/admin/screens" element={<ScreenPage />} /> */}
+        */}
       </Routes>
     </Router>
   );

@@ -24,15 +24,6 @@ const AdminPage = () => {
         <Link to="/admin/movies/register" className="admin-link">
           영화 등록 및 관리
         </Link>
-        <Link to="/admin/movies" className="admin-link">
-          영화 조회
-        </Link>
-        <Link to="/admin/screens/register" className="admin-link">
-          상영관 등록 및 관리
-        </Link>
-        <Link to="/admin/screens" className="admin-link">
-          상영관 조회
-        </Link>
       </div>
       <button className="logout-button" onClick={handleLogout}>
         로그아웃
