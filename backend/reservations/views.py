@@ -5,6 +5,7 @@ from .models import Reservation, Seat, Showtime
 from .serializers import ReservationSerializer, ReservationDetailSerializer
 from rest_framework.generics import RetrieveAPIView
 from datetime import datetime
+from django.utils.timezone import now
 
 
 class ShowtimeSeatsView(APIView):
@@ -105,7 +106,14 @@ class ReservationListView(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.request.query_params.get('user')
         if user_id:
-            return self.queryset.filter(user_id=user_id).select_related('seat')
+            # return self.queryset.filter(user_id=user_id).select_related('seat')
+            # 현재 시간을 기준으로 끝난 상영 제외
+            return (
+                self.queryset.filter(user_id=user_id)
+                .filter(showtime__end_time__gte=now())  # 끝난 상영 제외
+                .select_related('showtime', 'seat')
+                .order_by('showtime__start_time')  # 시작 시간 순 정렬
+            )
         return self.queryset.none()
 
 
