@@ -3,6 +3,11 @@ from .models import Reservation
 from movies.serializers import MovieSerializer, ScreenSerializer
 
 class ReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ['id', 'user', 'showtime', 'seat']
+
+class ReservationDetailSerializer(serializers.ModelSerializer):
     movie_title = serializers.CharField(source='showtime.movie.title', read_only=True)
     start_time = serializers.DateTimeField(source='showtime.start_time', read_only=True)
     screen_name = serializers.CharField(source='showtime.screen.name', read_only=True)
@@ -10,6 +15,7 @@ class ReservationSerializer(serializers.ModelSerializer):
     duration = serializers.IntegerField(source='showtime.movie.duration', read_only=True)
     age_limit = serializers.CharField(source='showtime.movie.age_limit', read_only=True)
     genre = serializers.CharField(source='showtime.movie.genre', read_only=True)
+    seat_number = serializers.CharField(source='seat.seat_number', read_only=True)
 
     class Meta:
         model = Reservation
