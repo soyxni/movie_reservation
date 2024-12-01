@@ -110,9 +110,9 @@ const ReservationPage = () => {
   return (
     <div className="reservation-page">
       <header className="header">
-        <Link to="/showtimes" className="back-button">
-          ← 뒤로가기
-        </Link>
+        <span className="back-text" onClick={() => navigate("/showtimes")}>
+          ← back
+        </span>
         <h1 className="title">예매하기</h1>
       </header>
       <div className="seat-selection">
