@@ -3,43 +3,90 @@
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 15px 0;
+  padding: 20px 0; /* 상단 여백을 늘려 티켓 느낌 강조 */
 }
 
 .title {
-  font-size: 24px;
+  font-size: 26px; /* 제목 크기 확대 */
   font-weight: bold;
   margin: 0;
+  text-transform: uppercase; /* 대문자 표시 */
+  letter-spacing: 2px; /* 글자 간격 추가 */
 }
 
 /* 예매 정보 스타일 */
 .ticket-details {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  line-height: 1.8;
+  margin: 30px auto;
+  padding: 30px;
+  border: 2px dashed #000; /* 티켓 외곽선 색상을 검은색으로 변경 */
+  border-radius: 10px; /* 둥근 모서리 */
+  background-color: #fdfdfd;
+  line-height: 2; /* 줄 간격 확대 */
+  width: 80%; /* 전체 화면 기준 폭 */
+  max-width: 600px; /* 최대 폭 */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
 .ticket-details p {
-  margin: 5px 0;
+  margin: 10px 30px; /* 요소 간격 추가 */
+  font-size: 18px; /* 글씨 크기 확대 */
+  font-family: "Arial", sans-serif;
+}
+
+.ticket-details strong {
+  color: #333; /* 강조 글씨 색 */
+  font-weight: bold;
+}
+
+/* 아이콘 스타일 */
+.ticket-details p strong:before {
+  content: ''; /* 기존 아이콘은 그대로 유지 */
 }
 
 /* 버튼 스타일 */
 .home-button {
   display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #007bff;
+  margin: 30px auto;
+  padding: 15px 30px; /* 버튼 크기 확대 */
+  background-color: #333; /* 버튼 색상을 #333으로 변경 */
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 10px; /* 둥근 모서리 */
+  font-size: 18px;
   cursor: pointer;
   text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* 애니메이션 */
 }
 
 .home-button:hover {
-  background-color: #0056b3;
+  background-color: #555; /* 호버 시 약간 더 밝은 색 */
+  transform: translateY(-2px); /* 호버 시 약간 올라감 */
+}
+
+/* 티켓 효과를 위한 스타일 */
+.ticket-details::before,
+.ticket-details::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    #f9f9f9 0,
+    #f9f9f9 15px,
+    #000 15px, /* 티켓 색상을 검은색으로 변경 */
+    #000 30px
+  );
+  margin: 10px auto;
+}
+
+.ticket-details::before {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.ticket-details::after {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
