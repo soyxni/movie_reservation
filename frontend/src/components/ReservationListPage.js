@@ -57,9 +57,9 @@ const ReservationListPage = () => {
   return (
     <div className="reservations-page">
       <header className="header">
-        <button className="back-button" onClick={() => navigate("/")}>
-          ← 뒤로가기
-        </button>
+        <span className="back-text" onClick={() => navigate("/")}>
+          ← back
+        </span>
         <h1 className="title">내 예매 내역</h1>
       </header>
       <div className="reservations-list">
