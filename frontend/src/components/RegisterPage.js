@@ -24,7 +24,7 @@ const RegisterPage = () => {
     try {
       // role이 Customer라면 staff_role을 null로 설정
       const formData = { ...form, staff_role: form.role === "Staff" ? form.staff_role : null };
-  
+
       const response = await fetch("http://127.0.0.1:8000/api/users/register/", {
         method: "POST",
         headers: {
@@ -32,7 +32,7 @@ const RegisterPage = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         alert("회원가입이 성공적으로 완료되었습니다.");
         navigate("/login");
@@ -46,16 +46,18 @@ const RegisterPage = () => {
       alert("서버와 연결에 실패했습니다.");
     }
   };
-  
 
   return (
     <div className="register-page">
+      {/* 상단바 */}
       <header className="header">
-        <button className="back-button" onClick={() => navigate("/")}>
-          ← 메인으로
-        </button>
-        <h1>회원가입</h1>
+        <span onClick={() => navigate("/")} className="back-text">
+          ← back
+        </span>
+        <h1 className="title">Sign Up</h1>
       </header>
+
+      {/* 회원가입 폼 */}
       <form className="register-form" onSubmit={handleSubmit}>
         <input
           type="email"
@@ -63,6 +65,7 @@ const RegisterPage = () => {
           placeholder="이메일"
           value={form.email}
           onChange={handleChange}
+          className="input-field"
           required
         />
         <input
@@ -71,6 +74,7 @@ const RegisterPage = () => {
           placeholder="비밀번호"
           value={form.password}
           onChange={handleChange}
+          className="input-field"
           required
         />
         <input
@@ -79,6 +83,7 @@ const RegisterPage = () => {
           placeholder="이름"
           value={form.name}
           onChange={handleChange}
+          className="input-field"
           required
         />
         <input
@@ -87,6 +92,7 @@ const RegisterPage = () => {
           placeholder="전화번호"
           value={form.phone}
           onChange={handleChange}
+          className="input-field"
           required
         />
         <input
@@ -95,9 +101,16 @@ const RegisterPage = () => {
           placeholder="생년월일"
           value={form.birth_date}
           onChange={handleChange}
+          className="input-field"
           required
         />
-        <select name="role" value={form.role} onChange={handleChange} required>
+        <select
+          name="role"
+          value={form.role}
+          onChange={handleChange}
+          className="input-field"
+          required
+        >
           <option value="Customer">Customer</option>
           <option value="Staff">Staff</option>
         </select>
@@ -106,6 +119,7 @@ const RegisterPage = () => {
             name="staff_role"
             value={form.staff_role}
             onChange={handleChange}
+            className="input-field"
             required
           >
             <option value="">직책 선택</option>
@@ -113,7 +127,9 @@ const RegisterPage = () => {
             <option value="Staff">Staff</option>
           </select>
         )}
-        <button type="submit">회원가입</button>
+        <button type="submit" className="register-button">
+          회원가입
+        </button>
       </form>
     </div>
   );
