@@ -24,6 +24,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         
         localStorage.setItem("token", data.access);
         localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("role", data.role);
 
         setIsAuthenticated(true);
         alert("로그인 성공");

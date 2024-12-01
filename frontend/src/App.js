@@ -8,6 +8,11 @@ import fetchWithToken from "./utils/fetchWithToken";
 import ReservationPage from "./components/ReservationPage";
 import ResDetailsPage from "./components/ResDetailsPage";
 import ReservationListPage from "./components/ReservationListPage";
+import AdminPage from "./components/AdminPage";
+import MovieRegisterPage from "./components/MovieRegisterPage";
+// import ScreenRegisterPage from "./components/ScreenRegisterPage";
+// import ScreenPage from "./components/ScreenPage";
+
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -50,9 +55,13 @@ const App = () => {
         <Route path="/movies" element={<MoviePage />} />
         <Route path="/showtimes" element={<ShowtimePage />} />
         <Route path="/reservations/:id" element={<ResDetailsPage />} />
-        <Route path="/admin" element={<div>관리자 모드 페이지</div>} />
         <Route path="/reservation/:id" element={<ReservationPage />} />
         <Route path="/reservations" element={<ReservationListPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/movies/register" element={<MovieRegisterPage />} />
+        {/* <Route path="/admin/screens/register" element={<ScreenRegisterPage />} />
+        <Route path="/admin/movies" element={<MoviePage />} />
+        <Route path="/admin/screens" element={<ScreenPage />} /> */}
       </Routes>
     </Router>
   );

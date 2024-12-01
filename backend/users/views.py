@@ -39,6 +39,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'refresh': str(refresh),
             'access': str(refresh.access_token),
             'user_id': user.id,  # user_id 추가
+            'role' : user.role,
             'user': {
                 'id': user.id,
                 'email': user.email,

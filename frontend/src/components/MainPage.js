@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./MainPage.css";
 
 const MainPage = ({ isAuthenticated, setIsAuthenticated }) => {
   const navigate = useNavigate();
+  const [role, setRole] = useState(null);
+
+  // role을 localStorage에서 불러옴
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role"); // role 정보 제거
     setIsAuthenticated(false);
     alert("로그아웃되었습니다.");
     navigate("/login");
+  };
+
+  const handleAdminMode = () => {
+    if (!isAuthenticated) {
+      alert("로그인 후 이용해주세요.");
+      navigate("/login");
+    } else if (role === "Staff") {
+      navigate("/admin");
+    } else {
+      alert("관리자 권한이 없습니다.");
+    }
   };
 
   return (
@@ -48,9 +67,9 @@ const MainPage = ({ isAuthenticated, setIsAuthenticated }) => {
 
       {/* 관리자 모드 링크 */}
       <div className="admin-mode">
-        <Link to="/admin" className="admin-link">
+        <button className="admin-button" onClick={handleAdminMode}>
           관리자 모드
-        </Link>
+        </button>
       </div>
     </div>
   );

@@ -23,28 +23,29 @@ class ScreenViewSet(viewsets.ModelViewSet):
     queryset = Screen.objects.all()
     serializer_class = ScreenSerializer
 
+
 # 권한 클래스 정의
 class IsManager(BasePermission):
     def has_permission(self, request, view):
         # 로그인된 사용자만 접근 가능 & staff_role이 'Manager'인 경우
         return request.user.is_authenticated and request.user.role == 'Staff' and request.user.staff_role == 'Manager'
 
+
 @api_view(['GET'])
 @permission_classes([IsManager])
 def admin_mode(request):
     return Response({"message": "Welcome to admin mode!"})
 
-# 영화 관리 ViewSet
-class MovieViewSet(viewsets.ModelViewSet):
+
+# 영화 관리 전용 ViewSet
+class MovieManageViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
-    permission_classes = [IsManager]  # 인증된 사용자 + 관리자만 접근 가능
-    # permission_classes = [AllowAny]
+    permission_classes = [IsManager]  # 관리자 권한만 접근 가능
 
 
-# 상영관 관리 ViewSet
-class ScreenViewSet(viewsets.ModelViewSet):
+# 상영관 관리 전용 ViewSet
+class ScreenManageViewSet(viewsets.ModelViewSet):
     queryset = Screen.objects.all()
     serializer_class = ScreenSerializer
-    permission_classes = [IsManager]  # 인증된 사용자 + 관리자만 접근 가능
-    # permission_classes = [AllowAny]
+    permission_classes = [IsManager]  # 관리자 권한만 접근 가능
